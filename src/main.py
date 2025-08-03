@@ -1,12 +1,13 @@
 import random
 import string
-from cryptography.fernet import Fernet
+from SavingData import SavingData
 
 #Welcome messeage, introduction to program
 print("Welcome to the Password Generator!")
 
 while True:
-    user_choice = input("Press X to generate a password, Y to strengthen your current password, or Z to exit: ")
+    user_choice = input("Press X to generate a password, Y to strengthen your current password, or Z to exit: ").upper()
+    password = ""  # Initialize password variable
 
     #password strengthening algorithim
     def strengthen_password(password):
@@ -59,7 +60,6 @@ while True:
     # Algorithim to generate a random password
     if user_choice == "X":
         print("Generating a random password...")
-        password = ""
         for i in range(17):
             password += random.choice(string.ascii_letters + string.digits + string.punctuation)
         print(f'Your password is: {password}')
@@ -73,6 +73,20 @@ while True:
         exit()
     else:
         print("Invalid option. Please try again.")
+        continue  # Skip saving if invalid option
+
+    #Ask user if they want to save their password. If they do, ask for a username and save to passwords.json
+    if password:  # Only ask to save if we have a password
+        save_password = input("Do you want to save your password? (Y/N): ").upper()
+        if save_password == "Y":
+            username = input("Enter a username: ")
+            saving_data = SavingData(username, password)
+            saving_data.save_password()
+            print("Password saved successfully.")
+        elif save_password == "N":
+            print("Password not saved.")
+        else:
+            print("Invalid option. Please try again.")
 
 
 
