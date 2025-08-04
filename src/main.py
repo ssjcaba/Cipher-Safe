@@ -1,6 +1,6 @@
 import random
 import string
-from SavingData import SavingData
+from SavingData import *
 
 #Welcome messeage, introduction to program
 print("Welcome to the Password Generator!")
@@ -87,6 +87,17 @@ while True:
             print("Password not saved.")
         else:
             print("Invalid option. Please try again.")
+            
+    #this is a test to see if user can access their password
+    password_finder = input("Would you like to access your password? (Y/N): ").upper()
+    if password_finder == "Y":
+        username = input("Enter your username: ")
+        accessing_data = accessingData(username)
+        print(accessing_data.access_password())
+    elif password_finder == "N":
+        print("Password not accessed.")
+    else:
+        print("Invalid option. Please try again.")
 
 
 
