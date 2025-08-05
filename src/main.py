@@ -99,6 +99,14 @@ while True:
     else:
         print("Invalid option. Please try again.")
 
+    #This is a test to see if user can delete their password
+    password_deleter = input("Would you like to delete your password? (Y/N): ").upper()
+    if password_deleter == "Y":
+        username = input("Enter your username: ")
+        deleting_data = deletingData(username)
+        deleting_data.delete_password()
+        print("Password deleted successfully.")
+
 
 
 

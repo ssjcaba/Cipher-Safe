@@ -93,4 +93,43 @@ class accessingData: #this class is used to access the password from the json fi
                 continue
         
         return f"No password found for username: {self.username}"
-
+        
+class deletingData: #this class is used to delete the password from the json file
+    def __init__(self, username):
+        self.username = username
+    def delete_password(self):
+        # Get the main project directory (one level up from src)
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_dir = os.path.dirname(current_dir)
+        
+        # Define file paths in the main project directory
+        key_file_path = os.path.join(project_dir, "secret.key")
+        json_file_path = os.path.join(project_dir, "passwords.json")
+        
+        # Load the encryption key 
+        try:
+            with open(key_file_path, "rb") as key_file:
+                key = key_file.read()
+        except FileNotFoundError:
+            return "No encryption key found"
+        
+        # Create Fernet instance
+        fernet = Fernet(key)
+        
+        # Load the passwords data
+        try:
+            with open(json_file_path, "r") as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            return "No passwords file found"
+        
+        # Find and delete the password
+        for username in data["passwords"]:
+            if username["username"] == self.username:
+                data["passwords"].remove(username)
+                break
+        
+        # Save the updated data
+        with open(json_file_path, "w") as f:
+            json.dump(data, f, indent=2)
+        return f"Password for {self.username} deleted successfully"

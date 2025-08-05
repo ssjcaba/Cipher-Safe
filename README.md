@@ -6,7 +6,7 @@ A lightweight Python script that strengthens, generates, and stores passwords us
 - Ensures mininum password length of 17 characters
 - Enforces a mininum of 3 uppercase letters
 - Adds randomness with letters, digits and symbols
-- Users can save passwords and access then later on for use. Can also delete or regenrate new ones
+- Users can save passwords and access them later on for use. Can also delete or regenrate new ones
 - Encrypts passwords when saving them and decrypts it on request when user wants to access them
 - Password is stored alongside username and social media platform
 
