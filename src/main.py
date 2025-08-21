@@ -6,7 +6,13 @@ from SavingData import *
 print("Welcome to the Password Generator!")
 
 while True:
-    user_choice = input("Press X to generate a password, Y to strengthen your current password, or Z to exit: ").upper()
+    print("\n=== Password Manager ===")
+    print("1. Generate new password")
+    print("2. Strengthen existing password") 
+    print("3. Access saved passwords")
+    print("4. Delete a password")
+    print("5. Exit")
+    user_choice = input("Enter your choice (1-5): ")
     password = ""  # Initialize password variable
 
     #password strengthening algorithim
@@ -58,18 +64,32 @@ while True:
         return new_password
 
     # Algorithim to generate a random password
-    if user_choice == "X":
+    if user_choice == "1":
         print("Generating a random password...")
         for i in range(17):
             password += random.choice(string.ascii_letters + string.digits + string.punctuation)
         print(f'Your password is: {password}')
 
     # process to strengthen the password
-    elif user_choice == "Y":
+    elif user_choice == "2":
         password = input("Enter your password: ")
         password = strengthen_password(password)
         print(f'Your new password is: {password}')
-    elif user_choice == "Z":
+
+    # Access saved passwords
+    elif user_choice == "3":
+        username = input("Enter your username: ")
+        accessing_data = accessingData(username)
+        print(accessing_data.access_password())
+
+    # Delete a password
+    elif user_choice == "4":
+        username = input("Enter your username: ")
+        deleting_data = deletingData(username)
+        result = deleting_data.delete_password()
+        print(result)
+
+    elif user_choice == "5":
         exit()
     else:
         print("Invalid option. Please try again.")
@@ -87,27 +107,6 @@ while True:
             print("Password not saved.")
         else:
             print("Invalid option. Please try again.")
-            
-    #this is a test to see if user can access their password
-    password_finder = input("Would you like to access your password? (Y/N): ").upper()
-    if password_finder == "Y":
-        username = input("Enter your username: ")
-        accessing_data = accessingData(username)
-        print(accessing_data.access_password())
-    elif password_finder == "N":
-        print("Password not accessed.")
-    else:
-        print("Invalid option. Please try again.")
-
-    #This is a test to see if user can delete their password
-    password_deleter = input("Would you like to delete your password? (Y/N): ").upper()
-    if password_deleter == "Y":
-        username = input("Enter your username: ")
-        deleting_data = deletingData(username)
-        deleting_data.delete_password()
-        print("Password deleted successfully.")
-
-
 
 
 

@@ -49,6 +49,8 @@ class SavingData: #This class is used to save the password and username to the j
         # Save updated data
         with open(json_file_path, "w") as f:
             json.dump(data, f, indent=2)
+
+
             
 class accessingData: #this class is used to access the password from the json file
     def __init__(self, username):
@@ -93,7 +95,9 @@ class accessingData: #this class is used to access the password from the json fi
                 continue
         
         return f"No password found for username: {self.username}"
+
         
+
 class deletingData: #this class is used to delete the password from the json file
     def __init__(self, username):
         self.username = username
@@ -124,10 +128,15 @@ class deletingData: #this class is used to delete the password from the json fil
             return "No passwords file found"
         
         # Find and delete the password
-        for username in data["passwords"]:
-            if username["username"] == self.username:
-                data["passwords"].remove(username)
-                break
+        for entry in data["passwords"]:
+            try:
+                # Decrypt the username to compare
+                decrypted_username = fernet.decrypt(entry["username"].encode()).decode()
+                if decrypted_username == self.username:
+                    data["passwords"].remove(entry)
+                    break
+            except Exception as e:
+                continue
         
         # Save the updated data
         with open(json_file_path, "w") as f:
